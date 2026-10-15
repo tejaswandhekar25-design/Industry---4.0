@@ -3,7 +3,7 @@
  * Centralized service for REST calls to FastAPI backend.
  */
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000/api' : '/api');
 
 async function request(endpoint, options = {}) {
   const url = `${API_BASE}${endpoint}`;

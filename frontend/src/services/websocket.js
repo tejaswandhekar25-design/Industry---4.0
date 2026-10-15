@@ -11,7 +11,10 @@ class WebSocketService {
     this.isConnected = false;
     this.reconnectAttempts = 0;
     this.maxReconnectDelay = 10000;
-    this.url = (import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws');
+    const defaultWsUrl = typeof window !== 'undefined' && window.location.host && !import.meta.env.DEV
+      ? `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/ws`
+      : 'ws://localhost:8000/ws';
+    this.url = import.meta.env.VITE_WS_URL || defaultWsUrl;
   }
 
   connect() {
