@@ -233,19 +233,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
-app.include_router(machines.router, prefix="/api", tags=["Machines"])
-app.include_router(sensors.router, prefix="/api", tags=["Sensors"])
-app.include_router(alerts.router, prefix="/api", tags=["Alerts"])
-app.include_router(quality.router, prefix="/api", tags=["Quality"])
-app.include_router(production.router, prefix="/api", tags=["Production"])
-app.include_router(simulation.router, prefix="/api", tags=["Simulation"])
-app.include_router(analytics.router, prefix="/api", tags=["Analytics"])
-app.include_router(maintenance.router, prefix="/api", tags=["Maintenance"])
+# Include routers for both /api and root paths to reconcile with Vercel rewrites
+_api_routers = [
+    (machines.router, "Machines"),
+    (sensors.router, "Sensors"),
+    (alerts.router, "Alerts"),
+    (quality.router, "Quality"),
+    (production.router, "Production"),
+    (simulation.router, "Simulation"),
+    (analytics.router, "Analytics"),
+    (maintenance.router, "Maintenance"),
+]
+for r, tag in _api_routers:
+    app.include_router(r, prefix="/api", tags=[tag])
+    app.include_router(r, tags=[tag])
 
 
 # ─── Health Check ──────────────────────────────────────────
 
+@app.get("/health")
 @app.get("/api/health")
 async def health_check():
     return {
@@ -262,6 +268,7 @@ async def health_check():
 # ─── WebSocket Endpoint ───────────────────────────────────
 
 @app.websocket("/ws")
+@app.websocket("/api/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await ws_manager.connect(websocket)
     try:

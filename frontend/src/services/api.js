@@ -298,4 +298,7 @@ export const api = {
     }),
   clearFaults: (machineId = 'ROBOT-01') =>
     request(`/simulation/faults/clear?machine_id=${machineId}`, { method: 'POST' }),
+
+  // Exports
+  getExportUrl: (type) => `${API_BASE}/analytics/export/${type}/csv`,
 };

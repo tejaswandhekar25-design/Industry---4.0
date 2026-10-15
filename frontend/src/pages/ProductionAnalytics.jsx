@@ -49,13 +49,13 @@ export default function ProductionAnalytics() {
 
         {/* CSV Export Dropdown / Buttons */}
         <div style={{ display: 'flex', gap: '8px' }}>
-          <a href="http://localhost:8000/api/analytics/export/sensors/csv" target="_blank" rel="noreferrer" className="btn btn-outline" style={{ fontSize: '0.78rem' }}>
+          <a href={api.getExportUrl('sensors')} target="_blank" rel="noreferrer" className="btn btn-outline" style={{ fontSize: '0.78rem' }}>
             <FileDown size={14} /> Telemetry CSV
           </a>
-          <a href="http://localhost:8000/api/analytics/export/faults/csv" target="_blank" rel="noreferrer" className="btn btn-outline" style={{ fontSize: '0.78rem' }}>
+          <a href={api.getExportUrl('faults')} target="_blank" rel="noreferrer" className="btn btn-outline" style={{ fontSize: '0.78rem' }}>
             <FileDown size={14} /> Faults CSV
           </a>
-          <a href="http://localhost:8000/api/analytics/export/inspections/csv" target="_blank" rel="noreferrer" className="btn btn-outline" style={{ fontSize: '0.78rem' }}>
+          <a href={api.getExportUrl('inspections')} target="_blank" rel="noreferrer" className="btn btn-outline" style={{ fontSize: '0.78rem' }}>
             <FileDown size={14} /> Inspections CSV
           </a>
         </div>

@@ -55,7 +55,7 @@ export default function PredictiveMaintenance({
   };
 
   const handleDownloadCsv = () => {
-    window.open('http://localhost:8000/api/analytics/export/faults/csv', '_blank');
+    window.open(api.getExportUrl('faults'), '_blank');
   };
 
   return (
